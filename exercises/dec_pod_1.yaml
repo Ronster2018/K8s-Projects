@@ -1,3 +1,5 @@
+# Example on creating a very basic pod using a YAML file
+
 apiVersion: v1
 kind: Pod # type of K8s object: Pod
 metadata:
