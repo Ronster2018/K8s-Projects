@@ -1,0 +1,31 @@
+# Usage:
+# Used when there is no hard requirement regarding pods running on the same nodes.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pod-affinity
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-controller
+  template:
+    metadata:
+      labels:
+        app: nginx-controller
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nginx-controller
+            topologyKey: "kubernetes.io/hostname"
